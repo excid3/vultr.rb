@@ -65,7 +65,7 @@ class DnsResourceTest < Minitest::Test
   def test_update_soa
     dns_domain = "example.com"
     body = {nsprimary: "ns1.vultr.com", email: "admin@example.com"}
-    stub = stub_request("domains/#{dns_domain}/soa", method: :patch, response: {})
+    stub = stub_request("domains/#{dns_domain}/soa", method: :patch, body: body, response: {})
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
 
     assert client.dns.update_soa(dns_domain: dns_domain, **body)
