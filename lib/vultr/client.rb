@@ -97,8 +97,8 @@ module Vultr
     end
 
     def connection
-      @connection ||= Faraday.new do |conn|
-        conn.url_prefix = BASE_URL
+      @connection ||= Faraday.new(BASE_URL) do |conn|
+        conn.request :oauth2, api_key, token_type: :bearer
         conn.request :json
         conn.response :json, content_type: "application/json"
         conn.adapter adapter, @stubs

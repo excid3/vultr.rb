@@ -29,7 +29,7 @@ module Vultr
     end
 
     def default_headers
-      {Authorization: "Bearer #{client.api_key}"}
+      {}
     end
 
     def handle_response(response)
