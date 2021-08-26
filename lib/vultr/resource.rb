@@ -9,27 +9,23 @@ module Vultr
     private
 
     def get_request(url, params: {}, headers: {})
-      handle_response client.connection.get(url, params, default_headers.merge(headers))
+      handle_response client.connection.get(url, params, headers)
     end
 
     def post_request(url, body:, headers: {})
-      handle_response client.connection.post(url, body, default_headers.merge(headers))
+      handle_response client.connection.post(url, body, headers)
     end
 
     def patch_request(url, body:, headers: {})
-      handle_response client.connection.patch(url, body, default_headers.merge(headers))
+      handle_response client.connection.patch(url, body, headers)
     end
 
     def put_request(url, body:, headers: {})
-      handle_response client.connection.put(url, body, default_headers.merge(headers))
+      handle_response client.connection.put(url, body, headers)
     end
 
     def delete_request(url, params: {}, headers: {})
-      handle_response client.connection.delete(url, params, default_headers.merge(headers))
-    end
-
-    def default_headers
-      {Authorization: "Bearer #{client.api_key}"}
+      handle_response client.connection.delete(url, params, headers)
     end
 
     def handle_response(response)
@@ -46,6 +42,8 @@ module Vultr
         raise Error, "Your request exceeded the API rate limit. #{response.body["error"]}"
       when 500
         raise Error, "We were unable to perform the request due to server-side problems. #{response.body["error"]}"
+      when 503
+        raise Error, "You have been rate limited for sending more than 20 requests per second. #{response.body["error"]}"
       end
 
       response
