@@ -46,7 +46,7 @@ module Vultr
     end
 
     def neighbors(instance_id:)
-      Object.new get_request("instances/#{instance_id}/neighbors").body.dig("neighbors")
+      get_request("instances/#{instance_id}/neighbors").body.dig("neighbors")
     end
 
     def user_data(instance_id:)
