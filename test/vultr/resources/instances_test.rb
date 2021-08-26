@@ -106,7 +106,7 @@ class InstancesResourceTest < Minitest::Test
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     instance = client.instances.neighbors(instance_id: instance_id)
 
-    assert_equal Vultr::Object, instance.class
+    assert_equal Array, instance.class
   end
 
   def test_user_data
