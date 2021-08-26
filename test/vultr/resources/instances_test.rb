@@ -14,7 +14,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_create
-    body = {"region": "ewr", "plan": "vc2-6c-16gb", "label": "Example Instance", "os_id": 215, "user_data": "QmFzZTY0IEV4YW1wbGUgRGF0YQ==", "backups": "enabled"}
+    body = {region: "ewr", plan: "vc2-6c-16gb", label: "Example Instance", os_id: 215, user_data: "QmFzZTY0IEV4YW1wbGUgRGF0YQ==", backups: "enabled"}
     stub = stub_request("instances", method: :post, body: body, response: stub_response(fixture: "instances/create", status: 202))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     instance = client.instances.create(**body)
@@ -35,7 +35,7 @@ class InstancesResourceTest < Minitest::Test
 
   def test_update
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
-    body = {"label": "Example Instance", "tag": "Example Tag", "plan": "vc2-24c-97gb"}
+    body = {label: "Example Instance", tag: "Example Tag", plan: "vc2-24c-97gb"}
     stub = stub_request("instances/#{instance_id}", method: :patch, body: body, response: stub_response(fixture: "instances/update", status: 202))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     assert client.instances.update(instance_id: instance_id, **body)
@@ -63,7 +63,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_reinstall
-    body = {"hostname": "Example Instance"}
+    body = {hostname: "Example Instance"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/reinstall", method: :post, body: body, response: stub_response(fixture: "instances/reinstall", status: 204))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -74,7 +74,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_restore
-    body = {"backup_id": "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
+    body = {backup_id: "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/restore", method: :post, body: body, response: stub_response(fixture: "instances/restore", status: 202))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -140,7 +140,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_create_ipv4
-    body = {"reboot": true}
+    body = {reboot: true}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/ipv4", method: :post, body: body, response: stub_response(fixture: "instances/ipv4", status: 202))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -158,7 +158,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_create_ipv4_reverse
-    body = {"ip": "192.0.2.123", "reverse": "foo.example.com"}
+    body = {ip: "192.0.2.123", reverse: "foo.example.com"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/ipv4/reverse", method: :post, body: body, response: stub_response(fixture: "instances/create_ipv4_reverse", status: 202))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -166,7 +166,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_set_default_reverse_dns_entry
-    body = {"ip": "192.0.2.123"}
+    body = {ip: "192.0.2.123"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/ipv4/reverse/default", method: :post, body: body, response: stub_response(fixture: "instances/set_default_reverse_dns_entry"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -194,7 +194,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_create_ipv6_reverse
-    body = {"ip": "2001:0db8:0005:6bb0:5400:2ff0:fee5:0002", "reverse": "foo.example.com"}
+    body = {ip: "2001:0db8:0005:6bb0:5400:2ff0:fee5:0002", reverse: "foo.example.com"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/ipv6/reverse", method: :post, body: body, response: stub_response(fixture: "instances/create_ipv6_reverse", status: 202))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -220,7 +220,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_attach_private_network
-    body = {"network_id": "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
+    body = {network_id: "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/private-networks/attach", method: :post, body: body, response: stub_response(fixture: "instances/attach_private_network"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -228,7 +228,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_detach_private_network
-    body = {"network_id": "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
+    body = {network_id: "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/private-networks/detach", method: :post, body: body, response: stub_response(fixture: "instances/detach_private_network"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -245,7 +245,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_attach_iso
-    body = {"iso_id": "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
+    body = {iso_id: "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/iso/attach", method: :post, body: body, response: stub_response(fixture: "instances/attach_iso", status: 204))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -255,7 +255,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_detach_iso
-    body = {"iso_id": "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
+    body = {iso_id: "cb676a46-66fd-4dfb-b839-443f2e6c0b60"}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/iso/detach", method: :post, body: body, response: stub_response(fixture: "instances/detach_iso"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -274,7 +274,7 @@ class InstancesResourceTest < Minitest::Test
   end
 
   def test_set_backup_schedule
-    body = {"type": "daily", "hour": 10, "dow": 1, "dom": 1}
+    body = {type: "daily", hour: 10, dow: 1, dom: 1}
     instance_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("instances/#{instance_id}/backup-schedule", method: :post, body: body, response: stub_response(fixture: "instances/set_backup_schedule"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
@@ -283,7 +283,7 @@ class InstancesResourceTest < Minitest::Test
 
   def test_halt_instances
     body = {
-      "instance_ids": [
+      instance_ids: [
         "cb676a46-66fd-4dfb-b839-443f2e6c0b60",
         "1d651bd2-b93c-4bb6-8b91-0546fd765f15",
         "c2790719-278d-474c-8dff-cb35d6e5503f"
@@ -297,7 +297,7 @@ class InstancesResourceTest < Minitest::Test
 
   def test_reboot_instances
     body = {
-      "instance_ids": [
+      instance_ids: [
         "cb676a46-66fd-4dfb-b839-443f2e6c0b60",
         "1d651bd2-b93c-4bb6-8b91-0546fd765f15",
         "c2790719-278d-474c-8dff-cb35d6e5503f"
@@ -311,7 +311,7 @@ class InstancesResourceTest < Minitest::Test
 
   def test_start_instances
     body = {
-      "instance_ids": [
+      instance_ids: [
         "cb676a46-66fd-4dfb-b839-443f2e6c0b60",
         "1d651bd2-b93c-4bb6-8b91-0546fd765f15",
         "c2790719-278d-474c-8dff-cb35d6e5503f"
