@@ -4,10 +4,11 @@ module Vultr
 
     attr_reader :api_key, :adapter, :proxy_url
 
-    def initialize(api_key:, adapter: Faraday.default_adapter, stubs: nil, proxy_url: nil)
+    def initialize(api_key:, adapter: Faraday.default_adapter, stubs: nil, proxy_url: nil, user_agent: nil)
       @api_key = api_key
       @adapter = adapter
       @proxy_url = proxy_url
+      @user_agent = user_agent
 
       # Test stubs for requests
       @stubs = stubs
@@ -109,6 +110,8 @@ module Vultr
 
         conn.response :dates
         conn.response :json, content_type: "application/json"
+
+        conn.headers['User-Agent'] = @user_agent if @user_agent.present?
 
         # Set the proxy URL
         conn.proxy = proxy_url if proxy_url.present?
