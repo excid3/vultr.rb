@@ -1,3 +1,7 @@
+== 2.1.1 / 2025-5-21
+
+* Improve `each` on Collection
+
 == 2.1.0 / 2025-5-21
 
 * Add enumerable to Collection
